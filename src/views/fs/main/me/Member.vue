@@ -7,13 +7,13 @@
             </div>
             <div style="font-size: 20px">&gt;</div>
         </div>
-        <div class="flex-menu-box">
-            <div>
-                <el-image src="/img/me/live-order.svg"></el-image>
-                <span style="font-size: 14px">直播订单管理</span>
-            </div>
-            <div style="font-size: 20px">&gt;</div>
-        </div>
+        <!--<div class="flex-menu-box">-->
+            <!--<div>-->
+                <!--<el-image src="/img/me/live-order.svg"></el-image>-->
+                <!--<span style="font-size: 14px">直播订单管理</span>-->
+            <!--</div>-->
+            <!--<div style="font-size: 20px">&gt;</div>-->
+        <!--</div>-->
     </div>
 </template>
 <script lang="ts">

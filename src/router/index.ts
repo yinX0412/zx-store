@@ -52,6 +52,10 @@ const routes: Array<RouteConfig> = [
                 path: '/fs/order/list',
                 component: () => import(/* chunkName:FsOrderList */'../views/fs/content/order/OrderList.vue')
             },
+            {
+                path: '/fs/me',
+                component: () => import(/* chunkName:FsMe */'../views/fs/main/me/UserDetail.vue')
+            },
         ],
     },
     {

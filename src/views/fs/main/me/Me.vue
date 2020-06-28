@@ -1,10 +1,10 @@
 <template>
     <div v-if="user">
-        <div class="avatar">
+        <div class="avatar" @click="goUserDetail">
             <div class="avatar-box">
                 <el-image :src="user.avatar"></el-image>
             </div>
-            <h2>{{user.account}}</h2>
+            <h2>{{user.username}}</h2>
         </div>
         <div style="padding: 10px">
             <big-agent v-if="user.identity===4"></big-agent>
@@ -37,6 +37,10 @@
 
         private goAuth() {
             window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirec';
+        }
+
+        private goUserDetail() {
+            this.$router.push('/fs/me');
         }
     }
 </script>
