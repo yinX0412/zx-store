@@ -1,4 +1,4 @@
-import {get} from '@/service/axiosConfig';
+import {get, post} from '@/service/axiosConfig';
 import {GoodsSku} from '@/service/bs/bs-goods-service';
 import {Address} from '@/service/bs/bs-order-service';
 
@@ -33,4 +33,32 @@ export interface Order {
 
 export function getOrderList(type: 2 | 3 | 4): Promise<List<OrderList>> {
     return get('/api/orders/list', {type});
+}
+
+export interface CreateOrderArgs {
+    type: 1 | 2 | 3 | 4 | 5;
+    custom_content?: any;
+    goods?: Array<{ goods_sku_id: string, goods_number: number }>;
+    cart_id?: string[];
+}
+
+export interface CreateOrderResp {
+    address_id: string;
+    amount: number;
+    created_at: string;
+    custom_content: string;
+    id: string;
+    is_rebates: string;
+    mch_billno: string;
+    order_sn: string;
+    order_type: 1 | 2 | 3 | 4 | 5;
+    pay_sn: string;
+    pay_time: string;
+    status: string;
+    updated_at: string;
+    update_at: string;
+}
+
+export function createOrder(form: CreateOrderArgs): Promise<CreateOrderResp> {
+    return post('/api/orders/store', form);
 }

@@ -41,8 +41,17 @@ const routes: Array<RouteConfig> = [
                 component: () => import(/* chunkName:redirectToGetAuthCode */'../views/fs/content/Login.vue')
             },
             {
-                path: '/fs/register',
-                component: () => import(/* chunkName:register */'../views/fs/content/Register.vue')
+                path: '/fs/goods/list/:seriesId',
+                component: () => import(/* chunkName:goodsOfSeries */'../views/fs/content/GoodsOfSeries.vue')
+            },
+            {
+                path: '/fs/customMade',
+                component: () => import(/* chunkName:FsCustomMade */'../views/fs/content/CustomMade.vue')
+            },
+
+            {
+                path: '/fs/invite',
+                component: () => import(/* chunkName:FsInvite */'../views/fs/content/Invite.vue')
             },
             {
                 path: '/fs/goods/:id',
@@ -56,7 +65,33 @@ const routes: Array<RouteConfig> = [
                 path: '/fs/me',
                 component: () => import(/* chunkName:FsMe */'../views/fs/main/me/UserDetail.vue')
             },
+            {
+                path: '/fs/member/manager',
+                component: () => import(/* chunkName:FsMemberManger */'../views/fs/content/member-manger/MemberManager.vue')
+            },
+            {
+                path: '/fs/member/list',
+                component: () => import(/* chunkName:FsMemberList */'../views/fs/content/member-manger/List.vue')
+            },
+            {
+                path: '/fs/businessUser/list',
+                component: () => import(/* chunkName:FsBusinessUserList */'../views/fs/content/businessUserManager/List.vue')
+            },
+
+
         ],
+    },
+    {
+        path: '/fs/member/pay',
+        component: () => import(/* chunkName:FsPayForRegister */'../views/fs/content/PayForRegister.vue')
+    },
+    {
+        path: '/fs/register',
+        component: () => import(/* chunkName:register */'../views/fs/content/Register.vue')
+    },
+    {
+        path: '/fs/bigAgent/register',
+        component: () => import(/* chunkName:register */'../views/fs/content/BigAgentRegister.vue')
     },
     {
         path: '*',
@@ -73,11 +108,27 @@ const routes: Array<RouteConfig> = [
     {
         path: '/bs',
         component: () => import(/* chunkName:BsIndex */'../views/bs/Index.vue'),
-        redirect: '/bs/goods/list',
+        redirect: '/bs/index',
         children: [
             {
                 path: '/bs/goods/list',
                 component: () => import(/* chunkName:BsGoodsList */'../views/bs/goods/List.vue'),
+            },
+            {
+                path: '/bs/index',
+                component: () => import(/* chunkName:BsHomePage */'../views/bs/HomePage.vue'),
+            },
+            {
+                path: '/bs/admin/manager',
+                component: () => import(/* chunkName:BsAdminManager */'../views/bs/user/AdminList.vue'),
+            },
+            {
+                path: '/bs/user/manager',
+                component: () => import(/* chunkName:BsUserManager */'../views/bs/user/UserList.vue'),
+            },
+            {
+                path: '/bs/user/:id',
+                component: () => import(/* chunkName:BsUserDetail */'../views/bs/user/UserDetail.vue'),
             },
             {
                 path: '/bs/order/list',

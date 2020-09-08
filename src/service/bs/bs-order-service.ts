@@ -10,9 +10,9 @@ export interface OrderGoodsSku {
     id: string;
     goods_name: string;
     sku_img: string;
-    member_price: number;
-    normal_price: number;
-    video_price: number;
+    member_price: string;
+    normal_price: string;
+    video_price: string;
     sku_content: any;
 }
 

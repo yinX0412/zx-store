@@ -16,6 +16,20 @@
                 </template>
             </el-table-column>
             <el-table-column
+                label="系列图片">
+                <template slot-scope="scope">
+                    <el-image :src="scope.row.image" style="width: 100px"></el-image>
+                </template>
+            </el-table-column>
+            <el-table-column
+                label="创建时间"
+                prop="created_at">
+            </el-table-column>
+            <el-table-column
+                label="更新时间"
+                prop="updated_at">
+            </el-table-column>
+            <el-table-column
                 width="100px"
                 label="更多操作">
                 <template slot-scope="scope">
@@ -47,7 +61,7 @@
                 })
                 .catch((error) => {
                     this.$message({
-                        type: 'error',
+                        type: 'warning',
                         message: error,
                     });
                 })
@@ -69,7 +83,7 @@
                 })
                 .catch((error) => {
                     this.$message({
-                        type: 'error',
+                        type: 'warning',
                         message: error,
                     });
                 })

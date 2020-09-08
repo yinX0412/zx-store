@@ -4,11 +4,11 @@
             <el-button @click="$router.go(-1)">返回</el-button>
         </div>
         <el-form ref="form" :model="form">
-            <el-form-item label="分类名称">
+            <el-form-item label="分类名称" required>
                 <el-input v-model="form.category_name" size="small" placeholder="请输入分类名称"
                           style="width: 200px"></el-input>
             </el-form-item>
-            <el-form-item label="分类图片">
+            <el-form-item label="分类图片" required>
                 <el-image v-if="form.image" :src="form.image"
                           style="width: 200px;vertical-align: middle"></el-image>
                 <el-upload
@@ -21,7 +21,7 @@
                     <el-button size="small" type="primary">点击上传</el-button>
                 </el-upload>
             </el-form-item>
-            <el-form-item label="分类属性">
+            <el-form-item label="分类属性" required>
                 <div style="display: inline-block;margin-right: 20px" v-if="selectedArr.length > 0">
                     {{selectedArr.map((item) => item.attribute_name).join(',')}}
                 </div>
@@ -103,7 +103,7 @@
                     };
                     this.selectedArr = res.attribute;
                 })
-                .catch((error) => this.$message({message: error, type: 'error'}))
+                .catch((error) => this.$message({message: error, type: 'warning'}))
                 .finally(() => this.loading = false);
         }
 
@@ -111,7 +111,7 @@
             this.loading = true;
             getAttrList()
                 .then((list) => this.attrList = list)
-                .catch((error) => this.$message({message: error, type: 'error'}))
+                .catch((error) => this.$message({message: error, type: 'warning'}))
                 .finally(() => this.loading = false);
         }
 
@@ -119,7 +119,7 @@
             if (file.size > 1024 * 1024 * 10) {
                 this.$message({
                     message: '请上传大小10M以内的图片',
-                    type: 'error',
+                    type: 'warning',
                 });
                 return;
             }
@@ -128,11 +128,32 @@
                 .then((res) => {
                     this.form.image = this.baseUrl + res.path;
                 })
-                .catch((error) => this.$message({message: error, type: 'error'}))
+                .catch((error) => this.$message({message: error, type: 'warning'}))
                 .finally(() => this.loading = false);
         }
 
         private updatwCategory() {
+            if (!this.form.category_name) {
+                this.$message({
+                    message: '请填写分类名称',
+                    type: 'warning',
+                });
+                return;
+            }
+            if (!this.form.image) {
+                this.$message({
+                    message: '请选择分类图片',
+                    type: 'warning',
+                });
+                return;
+            }
+            if (!this.form.attribute_id) {
+                this.$message({
+                    message: '请选择分类属性',
+                    type: 'warning',
+                });
+                return;
+            }
             this.loading = true;
             updateCategory(this.form)
                 .then(() => {
@@ -142,7 +163,7 @@
                     });
                     this.$router.replace('/bs/category/list');
                 })
-                .catch((error) => this.$message({message: error, type: 'error'}))
+                .catch((error) => this.$message({message: error, type: 'warning'}))
                 .finally(() => this.loading = false);
         }
 

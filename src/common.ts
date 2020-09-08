@@ -1,18 +1,17 @@
 import wx from 'weixin-js-sdk';
+import {getPayOrderConfig} from '@/service/fs/fs-pay-service';
 
 var AppId = '';
 var Timestamp = '';
 var Signature = '';
 var Noncestr = '';
 
-function GetSignature(callback) {
+function GetSignature(type: any, order_sn: string) {
     // qryWxSignature 这个是调用后台获取签名的接口
-    qryWxSignature({
-        url: window.location.href.split('#')[0]
-    }).then((data) => {
+    getPayOrderConfig(type, order_sn).then((data) => {
         AppId = data.appId;
         Timestamp = data.timestamp;
-        Signature = data.signature;
+        Signature = data.package;
         Noncestr = data.nonceStr;
         wx.config({
             beta: true,
@@ -75,10 +74,10 @@ function GetSignature(callback) {
                 'onWXDeviceBluetoothStateChange'
             ]
         });
-        wx.ready(function () {
-            console.log(callback, 'callback');
-            if (callback) callback();
-        });
+        // wx.ready(function () {
+        //     console.log(callback, 'callback');
+        //     if (callback) callback();
+        // });
     });
 }
 

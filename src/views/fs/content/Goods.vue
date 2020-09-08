@@ -2,6 +2,10 @@
     .sku-selected {
         border: 3px solid rgb(213, 132, 103);
     }
+
+    .btt {
+        height: 80% !important;
+    }
 </style>
 <template>
     <div v-if="goodsDetail" style="background: #f3f4f5">
@@ -61,52 +65,88 @@
             </div>
         </template>
 
+        <!--<div style="padding: 0 5px;margin-top: 10px">-->
+        <!--<div style="background: #fff;padding: 10px">-->
+        <!--<div style="display: inline-block;font-size: 14px;color: #606266;">规格：</div>-->
+        <!--<div v-for="item in goodsDetail.goods_sku"-->
+        <!--style="display: inline-block;margin-right: 10px;vertical-align: middle"-->
+        <!--@click="currentSku=item"-->
+        <!--:class="{'sku-selected': currentSku&&currentSku.id == item.id}">-->
+        <!--<el-image :src="item.sku_img" style="width: 40px;height: 40px;display: block"></el-image>-->
+        <!--</div>-->
+        <!--<div v-if="currentSku" style="margin-top: 10px">-->
+        <!--<div style="display: inline-block;font-size: 14px">详情：{{currentSku.sku_content}}</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
         <div style="padding: 0 5px;margin-top: 10px">
-            <div style="background: #fff;padding: 10px">
-                <div style="display: inline-block;font-size: 14px;color: #606266;">规格：</div>
-                <div v-for="item in goodsDetail.goods_sku"
-                     style="display: inline-block;margin-right: 10px;vertical-align: middle"
-                     @click="currentSku=item"
-                     :class="{'sku-selected': currentSku&&currentSku.id === item.id}">
-                    <el-image :src="item.sku_img" style="width: 40px;height: 40px;display: block"></el-image>
-                </div>
-                <div v-if="currentSku" style="margin-top: 10px">
-                    <div style="display: inline-block;font-size: 14px">详情：{{currentSku.sku_content}}</div>
-                </div>
-            </div>
-        </div>
-        <div style="padding: 0 5px;margin-top: 10px">
-            <div style="background: #fff;padding: 10px;font-size: 14px;">
+            <div style="background: #fff;padding: 10px 10px 30px 10px;font-size: 14px;width: 100%">
                 <div style="width: 25%;max-width: 70px;display: inline-block;vertical-align: top">
                     商品详情：
                 </div>
-                <div style="display: inline-block;width: 70%;word-break: break-all">
-                    {{goodsDetail.goods_detail}}
+                <div v-html="goodsDetail.goods_detail">
                 </div>
             </div>
         </div>
-        <div style="width: 100%;position: fixed;bottom: 10px;left: 0">
-            <div @click="addToCart"
-                 style="width: 90%;margin: 0 auto;border-radius: 30px;text-align: center;height: 30px;
-                line-height: 30px;color: #fff;background: #409EFF;font-size: 14px">
-                添加购物车
-            </div>
+        <div style="width: 100%;position: fixed;bottom: 0px;left: 0">
+            <el-row>
+                <el-col :span="20">
+                    <div @click="drawer = true"
+                         style="text-align: center;height: 30px;
+                            line-height: 30px;color: #fff;background: #409EFF;font-size: 14px">
+                        添加购物车
+                    </div>
+                </el-col>
+                <el-col :span="4">
+                    <div style="text-align: center;line-height: 30px;height: 30px;background: #fff"
+                         @click="$router.push('/fs/main/cart')">
+                        <i class="el-icon-shopping-cart-2"></i>
+                    </div>
+                </el-col>
+            </el-row>
+
         </div>
+        <el-drawer
+            title="商品规格"
+            :visible.sync="drawer"
+            direction="btt">
+            <div style="padding-left: 10px">
+                <div v-for="item in goodsDetail.goods_sku"
+                     style="display: inline-block;margin-right: 10px;vertical-align: middle;
+                     background: #ddd;padding: 3px 10px;border-radius: 5px;margin-bottom: 10px"
+                     @click="currentSku=item"
+                     :class="{'sku-selected': currentSku&&currentSku.id == item.id}">
+                    <el-image :src="item.sku_img"
+                              style="width: 20px;height: 20px;vertical-align: middle;margin-right: 10px"></el-image>
+                    <span style="font-size: 12px">{{item.sku_value}}</span>
+                </div>
+            </div>
+            <div style="position: absolute;bottom: 10px;width: 100%">
+                <div style="width: 90%;margin: 0 auto;border-radius: 30px;text-align: center;height: 30px;
+                line-height: 30px;color: #fff;background: #409EFF;font-size: 14px" @click="addToCart">确认
+                </div>
+            </div>
+        </el-drawer>
     </div>
 </template>
 <script lang="ts">
     import {Vue, Component} from 'vue-property-decorator';
-    import {getGoods, GoodsDetail, GoodsSku} from '@/service/bs/bs-goods-service';
     import {addGoodsToCart} from '@/service/fs/fs-cart-service';
     import moment from 'moment';
+    import {GoodsDetail, GoodsSku} from '@/service/bs/bs-goods-service';
+    import {getGoods} from '@/service/fs/fs-goods-service';
 
     @Component
     export default class FsGoodsDetail extends Vue {
         private loading: boolean = false;
+        private drawer: boolean = false;
         private goodsDetail: GoodsDetail | null = null;
         private currentSku: GoodsSku | null = null;
 
         get isLiving() {
+            if (!this.$store.state.config) {
+                return false;
+            }
             const begin = +moment(this.$store.state.config.video_begin_time).format('x');
             const end = +moment(this.$store.state.config.video_end_time).format('x');
             const now = new Date().getTime();
@@ -130,7 +170,7 @@
                 .then((res) => this.goodsDetail = res)
                 .catch((error) => {
                     this.$message({
-                        type: 'error',
+                        type: 'warning',
                         message: error,
                     });
                 })
@@ -158,11 +198,15 @@
                 })
                 .catch((error) => {
                     this.$message({
-                        type: 'error',
+                        type: 'warning',
                         message: error,
                     });
                 })
-                .finally(() => this.loading = false);
+                .finally(() => {
+                    this.loading = false;
+                    this.drawer = false;
+                    this.currentSku = null;
+                });
         }
     }
 </script>

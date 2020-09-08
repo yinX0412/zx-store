@@ -34,7 +34,7 @@
             <el-table-column
                 label="状态">
                 <template slot-scope="scope">
-                    {{scope.row.status === 1? '上架' : '下架'}}
+                    {{scope.row.status == 1? '上架' : '下架'}}
                 </template>
             </el-table-column>
             <el-table-column
@@ -61,8 +61,8 @@
                         <el-button size="small">...</el-button>
                       </span>
                         <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item command="publish" v-if="scope.row.status===2">上架</el-dropdown-item>
-                            <el-dropdown-item command="unpublish" v-if="scope.row.status===1">下架</el-dropdown-item>
+                            <el-dropdown-item command="publish" v-if="scope.row.status==2">上架</el-dropdown-item>
+                            <el-dropdown-item command="unpublish" v-if="scope.row.status==1">下架</el-dropdown-item>
                             <el-dropdown-item command="delete">删除</el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
@@ -105,7 +105,7 @@
                     this.total = res.total;
                 })
                 .catch((error) => this.$message({
-                    type: 'error',
+                    type: 'warning',
                     message: error,
                 }))
                 .finally(() => this.loading = false);
@@ -113,7 +113,7 @@
 
         private moreOperations(id: string, command: 'publish' | 'unpublish' | 'delete') {
             this.loading = true;
-            if (command === 'publish') {
+            if (command == 'publish') {
                 changeGoodsStatus({
                     goods_id: id,
                     type: 1,
@@ -125,21 +125,21 @@
                             message: '上架成功',
                         });
                         this.goodsList.forEach((item) => {
-                            if (item.id === id) {
+                            if (item.id == id) {
                                 item.status = 1;
                             }
                         });
                     })
                     .catch((error) => {
                         this.$message({
-                            type: 'error',
+                            type: 'warning',
                             message: error,
                         });
                     })
                     .finally(() => this.loading = false);
                 return;
             }
-            if (command === 'unpublish') {
+            if (command == 'unpublish') {
                 changeGoodsStatus({
                     goods_id: id,
                     type: 1,
@@ -151,21 +151,21 @@
                             message: '下架成功',
                         });
                         this.goodsList.forEach((item) => {
-                            if (item.id === id) {
+                            if (item.id == id) {
                                 item.status = 2;
                             }
                         });
                     })
                     .catch((error) => {
                         this.$message({
-                            type: 'error',
+                            type: 'warning',
                             message: error,
                         });
                     })
                     .finally(() => this.loading = false);
                 return;
             }
-            if (command === 'delete') {
+            if (command == 'delete') {
                 this.$confirm('确认删除该商品？')
                     .then(() => {
                         return changeGoodsStatus({
@@ -183,7 +183,7 @@
                     })
                     .catch((error) => {
                         this.$message({
-                            type: 'error',
+                            type: 'warning',
                             message: error,
                         });
                     })

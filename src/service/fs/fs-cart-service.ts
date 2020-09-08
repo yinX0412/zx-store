@@ -21,10 +21,10 @@ export interface CartGoodsList {
         goods_id: string;
         goods_name: string;
         sku_img: string;
-        member_price: number;
-        normal_price: number;
-        video_price: number;
-        sku_content: string;
+        member_price: string;
+    normal_price: string;
+    video_price: string;
+        sku_content: any;
         status: 1 | 2 | 3;
     };
 }

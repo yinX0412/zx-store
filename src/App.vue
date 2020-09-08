@@ -9,11 +9,20 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        color: #606266;
     }
 
     html {
         min-height: 100%;
+        width: 100%;
+        overflow-x: hidden;
         background: #f3f4f5;
+    }
+
+    .el-button--primary span {
+        color: #fff !important;
+    }
+
+    .el-message {
+        width: 300px !important;
     }
 </style>

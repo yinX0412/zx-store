@@ -32,7 +32,7 @@
         private activePage!: 'mainIndex' | 'mainCart' | 'mainMe' | '';
 
         private go(command: 'mainIndex' | 'mainCart' | 'mainMe') {
-            if (command === this.$route.name) {
+            if (command == this.$route.name) {
                 return;
             }
             switch (command) {

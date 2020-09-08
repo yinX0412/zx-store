@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="flex-menu-box">
-            <div @click="goOrders">
+        <div class="flex-menu-box" @click="goOrders">
+            <div>
                 <el-image src="/img/me/order.svg"></el-image>
                 <span style="font-size: 14px">订单管理</span>
             </div>

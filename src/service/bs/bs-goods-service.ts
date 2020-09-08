@@ -15,9 +15,9 @@ export interface GoodsList {
     goods_name: string;
     id: string;
     main_img: string;
-    member_price: number;
-    normal_price: number;
-    sales_volume: number;
+    member_price: string;
+    normal_price: string;
+    sales_volume: string;
     series: {
         created_at: string;
         id: string;
@@ -47,22 +47,30 @@ export interface CreateGoodsArgs {
     main_img: string;
     video_img: string;
     category_id: string;
-    member_price: number;
-    normal_price: number;
-    video_price: number;
+    member_price: string;
+    normal_price: string;
+    video_price: string;
     series_id: string;
     is_video: 1 | 2;
     status: 1 | 2;
     goods_detail: string;
-    goods_sku: GoodsSku[];
+    goods_sku: CreateGoodsSku[];
+}
+
+export interface CreateGoodsSku {
+    sku_img: string;
+    member_price: string;
+    normal_price: string;
+    video_price: string;
+    sku_content: any;
 }
 
 export interface GoodsSku {
     id: string;
     sku_img: string;
-    member_price: number;
-    normal_price: number;
-    video_price: number;
+    member_price: string;
+    normal_price: string;
+    video_price: string;
     sku_content: any;
 }
 
@@ -70,8 +78,20 @@ export function createGoods(form: CreateGoodsArgs): Promise<void> {
     return post('/admin/goods/store', form);
 }
 
-export interface UpdateGoodsArgs extends CreateGoodsArgs {
+export interface UpdateGoodsArgs {
     id: string;
+    goods_name: string;
+    main_img: string;
+    video_img: string;
+    category_id: string;
+    member_price: string;
+    normal_price: string;
+    video_price: string;
+    series_id: string;
+    is_video: 1 | 2;
+    status: 1 | 2;
+    goods_detail: string;
+    goods_sku: GoodsSku[];
 }
 
 export function updateGoods(form: UpdateGoodsArgs): Promise<void> {
@@ -97,9 +117,9 @@ export interface GoodsDetail {
     goods_detail: string;
     goods_name: string;
     main_img: string;
-    member_price: number;
-    normal_price: number;
-    sales_volume: number;
+    member_price: string;
+    normal_price: string;
+    sales_volume: string;
     series: {
         created_at: string;
         id: string;
@@ -112,10 +132,14 @@ export interface GoodsDetail {
     status: 1 | 2;
     update_at: string;
     video_img: string;
-    video_price: number;
+    video_price: string;
     goods_sku: GoodsSku[];
 }
 
 export function getGoods(id: string): Promise<GoodsDetail> {
-    return get('/api/goods/detail', {id});
+    return get('/admin/goods/detail', {id});
+}
+
+export function getStats(start_time: number, end_time: number): Promise<Array<{ date: string, money: string }>> {
+    return get('/admin/data', {start_time, end_time});
 }

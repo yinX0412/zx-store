@@ -95,7 +95,7 @@
                     this.total = res.total;
                 })
                 .catch((error) => this.$message({
-                    type: 'error',
+                    type: 'warning',
                     message: error,
                 }))
                 .finally(() => this.loading = false);

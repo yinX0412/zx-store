@@ -1,15 +1,16 @@
 <template>
-    <div v-loading="loading">
-        <div>
-            <h2>筑馨家商场后台管理系统</h2>
-            <el-form ref="form" :model="form">
-                <el-form-item label="账号">
-                    <el-input v-model="form.account" placeholder="请输入账号" style="width: 250px"></el-input>
-                </el-form-item>
-                <el-form-item label="密码">
-                    <el-input v-model="form.password" placeholder="请输入密码" style="width: 250px"></el-input>
-                </el-form-item>
-            </el-form>
+    <div v-loading="loading" style="background: #fff;height: 100vh;">
+        <div style="text-align: center;padding-top: 200px">
+            <h2 style="margin-bottom: 20px">筑馨家商场后台管理系统</h2>
+            <div style="margin-bottom: 20px">
+                <span style="color: #606266;font-size: 14px;margin-right: 10px">账号</span>
+                <el-input v-model="form.account" placeholder="请输入账号" style="width: 250px"></el-input>
+            </div>
+            <div style="margin-bottom: 20px">
+                <span style="color: #606266;font-size: 14px;margin-right: 10px">密码</span>
+                <el-input v-model="form.password" placeholder="请输入密码" style="width: 250px"
+                          type="password"></el-input>
+            </div>
             <el-button type="primary" @click="login">登录</el-button>
         </div>
 
@@ -41,7 +42,7 @@
                         this.$router.replace('/bs');
                     }
                 })
-                .catch((error) => this.$message({message: error, type: 'error'}))
+                .catch((error) => this.$message({message: error, type: 'warning'}))
                 .finally(() => this.loading = false);
         }
     }

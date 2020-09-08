@@ -5,13 +5,10 @@ import store from './store';
 import ElementUi from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import {Component} from 'vue-property-decorator';
+import wx from 'weixin-js-sdk';
 
-if (process.env.NODE_ENV === 'development') {
-    Vue.prototype.baseUrl = 'http://annual.gengyong.com.cn/';
-}
-if (process.env.NODE_ENV === 'production') {
-    Vue.prototype.baseUrl = 'http://www.baidu.com/';
-}
+Vue.prototype.wx = wx;
+Vue.prototype.baseUrl = 'http://annual.gengyong.com.cn';
 Vue.config.productionTip = false;
 Vue.use(ElementUi);
 Component.registerHooks([

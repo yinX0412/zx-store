@@ -3,11 +3,11 @@ import {upload} from '@/service/axiosConfig';
 export function uploadImg(file: File): Promise<{ path: string }> {
     const formData = new FormData();
     formData.append('file', file);
-    return upload('/admin/img_upload', formData);
+    return upload('/api/img_upload', formData);
 }
 
 export function uploadRichtextImg(file: File): Promise<{ path: string }> {
     const formData = new FormData();
     formData.append('file', file);
-    return upload('/admin/uploads', formData);
+    return upload('/api/uploads', formData);
 }

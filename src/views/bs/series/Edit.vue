@@ -4,11 +4,11 @@
             <el-button @click="$router.go(-1)">返回</el-button>
         </div>
         <el-form ref="form" :model="form">
-            <el-form-item label="系别名称">
-                <el-input v-model="form.series_name" size="small" placeholder="请输入系别名称"
+            <el-form-item label="系列名称" required>
+                <el-input v-model="form.series_name" size="small" placeholder="请输入系列名称"
                           style="width: 200px"></el-input>
             </el-form-item>
-            <el-form-item label="系别图片">
+            <el-form-item label="系列图片" required>
                 <el-image v-if="form.image" :src="form.image"
                           style="width: 200px;vertical-align: middle"></el-image>
                 <el-upload
@@ -55,7 +55,7 @@
                         image: this.baseUrl + res.image,
                     };
                 })
-                .catch((error) => this.$message({message: error, type: 'error'}))
+                .catch((error) => this.$message({message: error, type: 'warning'}))
                 .finally(() => this.loading = false);
         }
 
@@ -63,7 +63,7 @@
             if (file.size > 1024 * 1024 * 10) {
                 this.$message({
                     message: '请上传大小10M以内的图片',
-                    type: 'error',
+                    type: 'warning',
                 });
                 return;
             }
@@ -72,15 +72,22 @@
                 .then((res) => {
                     this.form.image = this.baseUrl + res.path;
                 })
-                .catch((error) => this.$message({message: error, type: 'error'}))
+                .catch((error) => this.$message({message: error, type: 'warning'}))
                 .finally(() => this.loading = false);
         }
 
         private saveSeries() {
             if (!this.form.series_name) {
                 this.$message({
-                    message: '请输入系别名称',
-                    type: 'error',
+                    message: '请输入系列名称',
+                    type: 'warning',
+                });
+                return;
+            }
+            if (!this.form.image) {
+                this.$message({
+                    message: '请选择系列图片',
+                    type: 'warning',
                 });
                 return;
             }
@@ -93,7 +100,7 @@
                     });
                     this.$router.replace('/bs/series/list');
                 })
-                .catch((error) => this.$message({message: error, type: 'error'}))
+                .catch((error) => this.$message({message: error, type: 'warning'}))
                 .finally(() => this.loading = false);
         }
     }

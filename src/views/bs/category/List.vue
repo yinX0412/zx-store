@@ -16,6 +16,26 @@
                 </template>
             </el-table-column>
             <el-table-column
+                label="分类图片">
+                <template slot-scope="scope">
+                    <el-image :src="scope.row.image" style="width: 100px"></el-image>
+                </template>
+            </el-table-column>
+            <el-table-column
+                label="分类属性">
+                <template slot-scope="scope">
+                    <div>{{scope.row.attribute.map(item=>item.attribute_name).join('，')}}</div>
+                </template>
+            </el-table-column>
+            <el-table-column
+                label="创建时间"
+                prop="created_at">
+            </el-table-column>
+            <el-table-column
+                label="更新时间"
+                prop="updated_at">
+            </el-table-column>
+            <el-table-column
                 width="100px"
                 label="更多操作">
                 <template slot-scope="scope">
@@ -46,7 +66,7 @@
                     this.categoryList = res;
                 })
                 .catch((error) => this.$message({
-                    type: 'error',
+                    type: 'warning',
                     message: error,
                 }))
                 .finally(() => this.loading = false);
@@ -67,7 +87,7 @@
                 })
                 .catch((error) => {
                     this.$message({
-                        type: 'error',
+                        type: 'warning',
                         message: error,
                     });
                 })
